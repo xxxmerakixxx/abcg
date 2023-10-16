@@ -1,5 +1,8 @@
 #include "window.hpp"
 
+#include <glm/gtx/fast_trigonometry.hpp>
+#include <glm/gtx/rotate_vector.hpp>
+
 void Window::onCreate() {
   auto const *vertexShader{R"gl(#version 300 es
 
@@ -56,8 +59,8 @@ void Window::onPaint() {
 
   abcg::glUseProgram(m_program);
 
-  auto const m_translation = abcg::glGetUniformLocation(m_program, "translation");
-
+  auto const m_transl = abcg::glGetUniformLocation(m_program, "translation");
+  abcg::glUniform2fv(m_transl, 1, &m_translation.x);
   // Pick a random xy position from (-1,-1) to (1,1)
 //   std::uniform_real_distribution rd1(-1.0f, 1.0f);
 //   glm::vec2 const translation{rd1(m_randomEngine), rd1(m_randomEngine)};
@@ -215,6 +218,5 @@ void Window::onEvent(SDL_Event const &event) {
     if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d)
       m_gameData.m_input.reset(gsl::narrow<size_t>(Input::Right));
   }
-
   
 }

@@ -14,7 +14,11 @@ protected:
   void onPaintUI() override;
   void onResize(glm::ivec2 const &size) override;
   void onDestroy() override;
-
+  float m_scale{0.125f}; 
+  
+public:
+  glm::vec2 m_translation{};
+  
 private:
   glm::ivec2 m_viewportSize{};
 
