@@ -3,3 +3,4 @@
 # add_subdirectory(tictactoe)
 # add_subdirectory(sierpinski)
 add_subdirectory(snake)
+add_subdirectory(asteroids4)
