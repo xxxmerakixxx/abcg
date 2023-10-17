@@ -42,15 +42,16 @@ void Fishes::paint() {
     abcg::glUniform1f(m_scaleLoc, asteroid.m_scale);
     abcg::glUniform1f(m_rotationLoc, asteroid.m_rotation);
 
+
+    
     for (auto i : {-2, 0, 2}) {
-      for (auto j : {-2, 0, 2}) {
+      for (auto j : {-2, 0, 2}) { 
         abcg::glUniform2f(m_translationLoc, asteroid.m_translation.x + j,
                           asteroid.m_translation.y + i);
 
         abcg::glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, nullptr);
       }
     }
-
     abcg::glBindVertexArray(0);
   }
 
