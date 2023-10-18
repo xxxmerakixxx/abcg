@@ -107,10 +107,7 @@ void Window::onUpdate() {
   m_starLayers.update(m_carp, deltaTime);
   m_fishes.update(m_carp, deltaTime);
 
-  if (m_gameData.m_state == State::Playing) {
-    checkCollisions();
-    checkWinCondition();
-  }
+  
 }
 
 void Window::onPaint() {
@@ -164,7 +161,6 @@ void Window::checkCollisions() {
     auto const distance{
         glm::distance(m_carp.m_translation, asteroidTranslation)};
 
-    
   }
 
   // Check collision between bullets and asteroids

@@ -42,8 +42,6 @@ void Fishes::paint() {
     abcg::glUniform1f(m_scaleLoc, asteroid.m_scale);
     abcg::glUniform1f(m_rotationLoc, asteroid.m_rotation);
 
-
-    
     for (auto i : {-2, 0, 2}) {
       for (auto j : {-2, 0, 2}) { 
         abcg::glUniform2f(m_translationLoc, asteroid.m_translation.x + j,
@@ -54,13 +52,14 @@ void Fishes::paint() {
     }
     abcg::glBindVertexArray(0);
   }
-
+  
   abcg::glUseProgram(0);
 }
 
 void Fishes::destroy() {
   for (auto &asteroid : m_fishes) {
     abcg::glDeleteBuffers(1, &asteroid.m_VBO);
+    abcg::glDeleteBuffers(1, &asteroid.m_EBO);
     abcg::glDeleteVertexArrays(1, &asteroid.m_VAO);
   }
 }
@@ -86,11 +85,11 @@ void Fishes::update(const Carp &ship, float deltaTime) {
 
 Fishes::Fish Fishes::makeFish(glm::vec2 translation,
                                             float scale) {
-  Fish asteroid;
+  Fish fish;
 
   auto &re{m_randomEngine}; // Shortcut
 
-  // Randomly pick the number of sides
+  
  std::array positions{
       // Carp body
       glm::vec2{-03.5f, +8.5f}, glm::vec2{+03.5f, +8.5f},
@@ -112,19 +111,19 @@ Fishes::Fish Fishes::makeFish(glm::vec2 translation,
 
   // Get a random color (actually, a grayscale)
   std::uniform_real_distribution randomIntensity(0.5f, 1.0f);
-  asteroid.m_color = glm::vec4(randomIntensity(re));
+  fish.m_color = glm::vec4(randomIntensity(re));
 
-  asteroid.m_color.a = 1.0f;
-  asteroid.m_rotation = 0.0f;
-  asteroid.m_scale = scale;
-  asteroid.m_translation = translation;
+  fish.m_color.a = 1.0f;
+  fish.m_rotation = 0.0f;
+  fish.m_scale = scale;
+  fish.m_translation = translation;
 
   // Get a random angular velocity
-  asteroid.m_angularVelocity = m_randomDist(re);
+  fish.m_angularVelocity = m_randomDist(re);
 
   // Get a random direction
   glm::vec2 const direction{m_randomDist(re), m_randomDist(re)};
-  asteroid.m_velocity = glm::normalize(direction) / 7.0f;
+  fish.m_velocity = glm::normalize(direction) / 7.0f;
 
   // Create geometry data
   // std::vector<glm::vec2> positions{{0, 0}};
@@ -137,15 +136,15 @@ Fishes::Fish Fishes::makeFish(glm::vec2 translation,
   // positions.push_back(positions.at(1));
 
   // Generate VBO
-  abcg::glGenBuffers(1, &asteroid.m_VBO);
-  abcg::glBindBuffer(GL_ARRAY_BUFFER, asteroid.m_VBO);
-  abcg::glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(glm::vec2),
+  abcg::glGenBuffers(1, &fish.m_VBO);
+  abcg::glBindBuffer(GL_ARRAY_BUFFER, fish.m_VBO);
+  abcg::glBufferData(GL_ARRAY_BUFFER, sizeof(positions),
                      positions.data(), GL_STATIC_DRAW);
   abcg::glBindBuffer(GL_ARRAY_BUFFER, 0);
 
   // /  Generate EBO
-  abcg::glGenBuffers(1, &m_EBO);
-  abcg::glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+  abcg::glGenBuffers(1, &fish.m_EBO);
+  abcg::glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, fish.m_EBO);
   abcg::glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices.data(),
                      GL_STATIC_DRAW);
   abcg::glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -155,19 +154,22 @@ Fishes::Fish Fishes::makeFish(glm::vec2 translation,
       abcg::glGetAttribLocation(m_program, "inPosition")};
 
   // Create VAO
-  abcg::glGenVertexArrays(1, &asteroid.m_VAO);
+  abcg::glGenVertexArrays(1, &fish.m_VAO);
 
   // Bind vertex attributes to current VAO
-  abcg::glBindVertexArray(asteroid.m_VAO);
+  abcg::glBindVertexArray(fish.m_VAO);
 
-  abcg::glBindBuffer(GL_ARRAY_BUFFER, asteroid.m_VBO);
+  
   abcg::glEnableVertexAttribArray(positionAttribute);
+  abcg::glBindBuffer(GL_ARRAY_BUFFER, fish.m_VBO);
   abcg::glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 0,
                               nullptr);
   abcg::glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+  abcg::glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, fish.m_EBO);
+
   // End of binding to current VAO
   abcg::glBindVertexArray(0);
-
-  return asteroid;
+  
+  return fish;
 }

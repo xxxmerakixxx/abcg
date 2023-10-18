@@ -15,12 +15,12 @@ public:
   void paint();
   void destroy();
   void update(const Carp &ship, float deltaTime);
-  GLuint m_EBO{};
+  
 
   struct Fish {
     GLuint m_VAO{};
     GLuint m_VBO{};
-    
+    GLuint m_EBO{};
 
     float m_angularVelocity{};
     glm::vec4 m_color{1};
