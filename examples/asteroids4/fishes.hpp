@@ -34,7 +34,7 @@ public:
 
   std::list<Fish> m_fishes;
 
-  Fish makeFish(glm::vec2 translation = {}, float scale = 0.25f);
+  Fish makeFish(glm::vec2 translation = {}, float scale = 0.15f);
 
 private:
   GLuint m_program{};

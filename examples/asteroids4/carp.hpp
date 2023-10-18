@@ -15,7 +15,7 @@ public:
 
   glm::vec4 m_color{1, 0.54901608f, 0.0f, 1};
   float m_rotation{};
-  float m_scale{0.125f};
+  float m_scale{0.2f};
   glm::vec2 m_translation{};
   glm::vec2 m_velocity{};
 

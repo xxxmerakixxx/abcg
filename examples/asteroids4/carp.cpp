@@ -74,14 +74,12 @@ void Carp::create(GLuint program) {
 
   // End of binding to current VAO
   abcg::glBindVertexArray(0);
-  abcg::glClearColor(0.117647059f, 0.564705882f, 1, 1);
+  // abcg::glClearColor(0.117647059f, 0.564705882f, 1, 1);
 }
 
 void Carp::paint(const GameData &gameData) {
   if (gameData.m_state != State::Playing)
     return;
-
-  // abcg::glClear(GL_COLOR_BUFFER_BIT);
 
   abcg::glUseProgram(m_program);
 
@@ -98,8 +96,8 @@ void Carp::paint(const GameData &gameData) {
   if (gameData.m_input[static_cast<size_t>(Input::Up)]) {
     // Show thruster trail for 50 ms
     if (m_trailBlinkTimer.elapsed() < 50.0 / 1000.0) {
-      // abcg::glEnable(GL_BLEND);
-      // abcg::glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+      abcg::glEnable(GL_BLEND);
+      abcg::glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
       // 50% transparent
       abcg::glUniform4f(m_colorLoc, 50, 205, 50 , 0.0f);
@@ -110,8 +108,8 @@ void Carp::paint(const GameData &gameData) {
     }
   }
 
-  // abcg::glUniform4fv(m_colorLoc, 1, &m_color.r);
-  // abcg::glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, nullptr);
+  abcg::glUniform4fv(m_colorLoc, 1, &m_color.r);
+  abcg::glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, nullptr);
 
   abcg::glBindVertexArray(0);
 
@@ -131,7 +129,7 @@ void Carp::update(GameData const &gameData, float deltaTime) {
     glm::vec2 direction{m_translation.x ,
                         -(m_translation.y)};
     m_rotation = std::atan2(direction.y, direction.x) * deltaTime + M_PI_2 ;
-    if (m_translation.x > -0.9f)
+    if (m_translation.x > -0.8f)
       m_translation = glm:: vec2(m_translation.x - 1.5f * deltaTime, m_translation.y);
   }
     
@@ -139,7 +137,7 @@ void Carp::update(GameData const &gameData, float deltaTime) {
     glm::vec2 direction{m_translation.x,
                         -(m_translation.y)};
     m_rotation = std::atan2(direction.y, direction.x)* deltaTime - M_PI_2;
-    if (m_translation.x < 0.9f)
+    if (m_translation.x < 0.8f)
       m_translation = glm:: vec2(m_translation.x + 1.5f * deltaTime, m_translation.y);
   }
 
@@ -147,7 +145,7 @@ void Carp::update(GameData const &gameData, float deltaTime) {
         glm::vec2 direction{m_translation.x,
                         -(m_translation.y)};
     m_rotation = std::atan2(direction.y, direction.x)* deltaTime + M_PI_2 * 4;
-    if (m_translation.y < 0.9f) 
+    if (m_translation.y < 0.8f) 
       m_translation = glm:: vec2(m_translation.x , m_translation.y + 1.5f * deltaTime);
   }
   
@@ -155,7 +153,7 @@ void Carp::update(GameData const &gameData, float deltaTime) {
     glm::vec2 direction{m_translation.x,
                         - (m_translation.y)};
     m_rotation = std::atan2(-direction.y, direction.x)* deltaTime + M_PI_2 * 2;
-    if (m_translation.y > -0.9f)
+    if (m_translation.y > -0.8f)
       m_translation = glm:: vec2(m_translation.x , m_translation.y - 1.5f * deltaTime);
   }
 

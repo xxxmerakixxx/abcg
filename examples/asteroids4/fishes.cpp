@@ -110,10 +110,12 @@ Fishes::Fish Fishes::makeFish(glm::vec2 translation,
                            };
 
   // Get a random color (actually, a grayscale)
-  std::uniform_real_distribution randomIntensity(0.5f, 1.0f);
+  std::uniform_real_distribution randomIntensity(0.1f, 1.0f);
   fish.m_color = glm::vec4(randomIntensity(re));
 
   fish.m_color.a = 1.0f;
+  fish.m_color.b = 0.0f;
+  fish.m_color.g = 0.0f;
   fish.m_rotation = 0.0f;
   fish.m_scale = scale;
   fish.m_translation = translation;
@@ -159,9 +161,8 @@ Fishes::Fish Fishes::makeFish(glm::vec2 translation,
   // Bind vertex attributes to current VAO
   abcg::glBindVertexArray(fish.m_VAO);
 
-  
-  abcg::glEnableVertexAttribArray(positionAttribute);
   abcg::glBindBuffer(GL_ARRAY_BUFFER, fish.m_VBO);
+  abcg::glEnableVertexAttribArray(positionAttribute);
   abcg::glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 0,
                               nullptr);
   abcg::glBindBuffer(GL_ARRAY_BUFFER, 0);
