@@ -21,31 +21,31 @@ void Fishes::create(GLuint program, int quantity) {
   m_fishes.clear();
   m_fishes.resize(quantity);
 
-  for (auto &asteroid : m_fishes) {
-    asteroid = makeFish();
+  for (auto &fish : m_fishes) {
+    fish = makeFish();
 
     // Make sure the asteroid won't collide with the ship
     do {
-      asteroid.m_translation = {m_randomDist(m_randomEngine),
+      fish.m_translation = {m_randomDist(m_randomEngine),
                                 m_randomDist(m_randomEngine)};
-    } while (glm::length(asteroid.m_translation) < 0.5f);
+    } while (glm::length(fish.m_translation) < 0.5f);
   }
 }
 
 void Fishes::paint() {
   abcg::glUseProgram(m_program);
 
-  for (auto const &asteroid : m_fishes) {
-    abcg::glBindVertexArray(asteroid.m_VAO);
+  for (auto const &fish : m_fishes) {
+    abcg::glBindVertexArray(fish.m_VAO);
 
-    abcg::glUniform4fv(m_colorLoc, 1, &asteroid.m_color.r);
-    abcg::glUniform1f(m_scaleLoc, asteroid.m_scale);
-    abcg::glUniform1f(m_rotationLoc, asteroid.m_rotation);
+    abcg::glUniform4fv(m_colorLoc, 1, &fish.m_color.r);
+    abcg::glUniform1f(m_scaleLoc, fish.m_scale);
+    abcg::glUniform1f(m_rotationLoc, fish.m_rotation);
 
     for (auto i : {-2, 0, 2}) {
       for (auto j : {-2, 0, 2}) { 
-        abcg::glUniform2f(m_translationLoc, asteroid.m_translation.x + j,
-                          asteroid.m_translation.y + i);
+        abcg::glUniform2f(m_translationLoc, fish.m_translation.x + j,
+                          fish.m_translation.y + i);
 
         abcg::glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, nullptr);
       }
@@ -57,16 +57,16 @@ void Fishes::paint() {
 }
 
 void Fishes::destroy() {
-  for (auto &asteroid : m_fishes) {
-    abcg::glDeleteBuffers(1, &asteroid.m_VBO);
-    abcg::glDeleteBuffers(1, &asteroid.m_EBO);
-    abcg::glDeleteVertexArrays(1, &asteroid.m_VAO);
+  for (auto &fish : m_fishes) {
+    abcg::glDeleteBuffers(1, &fish.m_VBO);
+    abcg::glDeleteBuffers(1, &fish.m_EBO);
+    abcg::glDeleteVertexArrays(1, &fish.m_VAO);
   }
 }
 
-void Fishes::update(const Carp &ship, float deltaTime) {
+void Fishes::update(const Carp &carp, float deltaTime) {
   for (auto &fish : m_fishes) {
-    fish.m_translation -= ship.m_velocity * deltaTime;
+    fish.m_translation -= carp.m_velocity * deltaTime;
     fish.m_rotation = glm::wrapAngle(
         fish.m_rotation + fish.m_angularVelocity * deltaTime);
     fish.m_translation += fish.m_velocity * deltaTime;
