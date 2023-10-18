@@ -27,16 +27,21 @@ O aquário foi desenvolvido baseado no projeto "Asteroides" ensinado na própria
 ## Alterações realizadas
 
 As principais alterações feitas foram:
+
 1. Formato, tamanho, cor da Nave para se tornar um peixe
+   
    Substituímos no array positions os vec2 com pontos desejados para desenhar o peixe e seus respectivos indices para ligar os pontos dos triângulos.  Houve uma alteração na escala do peixe para torná-lo maior, consequentemente o principal na tela. Por fim, utilizando um vec4 mudamos sua cor para um tom de laranja no formato rgb que foi normalizado.
    
 2. Adição de movimentos ao peixe principal
+   
   Adicionamos um evento para que o peixe possa se mover e restringimos seus movimentos para ele não sair do campo de visualização
  
 3. Substituição dos asteróides (arrays) por Elements para recriar peixes menores secundários que nadam no aquário em várias direções e troca de cores
+   
    Utilizando a mesma base do peixe acima inserimos peixes coloridos que nadam no aquário
    
-5. Cor de fundo para simular água
+4. Cor de fundo para simular água
+   
    Mudamos a cor do fundo para azul
 
 
