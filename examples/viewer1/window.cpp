@@ -33,7 +33,7 @@ void Window::onCreate() {
                                  {.source = assetsPath + "depth.frag",
                                   .stage = abcg::ShaderStage::Fragment}});
 
-  m_model.loadObj(assetsPath + "bunny.obj");
+  m_model.loadObj(assetsPath + "12221_Cat_v1_l3.obj");
   m_model.setupVAO(m_program);
 
   m_trianglesToDraw = m_model.getNumTriangles();
@@ -87,7 +87,7 @@ void Window::onPaintUI() {
     {
       // Slider will fill the space of the window
       ImGui::PushItemWidth(m_viewportSize.x - 25);
-      ImGui::SliderInt("", &m_trianglesToDraw, 0, m_model.getNumTriangles(),
+      ImGui::SliderInt("slider int", &m_trianglesToDraw, 0, m_model.getNumTriangles(),
                        "%d triangles");
       ImGui::PopItemWidth();
     }
