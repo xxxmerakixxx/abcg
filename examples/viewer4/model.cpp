@@ -70,14 +70,15 @@ void Model::createBuffers() {
 void Model::loadDiffuseTexture(std::string_view path) {
   if (!std::filesystem::exists(path))
     return;
-
+  // nota: deleta se tiver uma textura anterior
   abcg::glDeleteTextures(1, &m_diffuseTexture);
+  // nota: carrega textura
   m_diffuseTexture = abcg::loadOpenGLTexture({.path = path});
 }
-
+// nota: le o modelo
 void Model::loadObj(std::string_view path, bool standardize) {
   auto const basePath{std::filesystem::path{path}.parent_path().string() + "/"};
-
+  // nota: procura o mtl (textura)
   tinyobj::ObjReaderConfig readerConfig;
   readerConfig.mtl_search_path = basePath; // Path to material files
 
@@ -186,7 +187,8 @@ void Model::loadObj(std::string_view path, bool standardize) {
 
 void Model::render(int numTriangles) const {
   abcg::glBindVertexArray(m_VAO);
-
+  // nota: estou dizendo q vou usar a primeira unidade de textura, podemos
+  // utilizar mais texturas ao msm tempo
   abcg::glActiveTexture(GL_TEXTURE0);
   abcg::glBindTexture(GL_TEXTURE_2D, m_diffuseTexture);
 

@@ -6,6 +6,7 @@
 struct Vertex {
   glm::vec3 position{};
   glm::vec3 normal{};
+  // nota: coordenada de textura
   glm::vec2 texCoord{};
 
   friend bool operator==(Vertex const &, Vertex const &) = default;
@@ -39,6 +40,7 @@ private:
   glm::vec4 m_Kd{};
   glm::vec4 m_Ks{};
   float m_shininess{};
+  // nota: carrega a textura
   GLuint m_diffuseTexture{};
 
   std::vector<Vertex> m_vertices;

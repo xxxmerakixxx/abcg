@@ -97,6 +97,7 @@ void Window::onPaint() {
   auto const KaLoc{abcg::glGetUniformLocation(program, "Ka")};
   auto const KdLoc{abcg::glGetUniformLocation(program, "Kd")};
   auto const KsLoc{abcg::glGetUniformLocation(program, "Ks")};
+  // nota: essa diffusetext ta no vertex, unidade de textura
   auto const diffuseTexLoc{abcg::glGetUniformLocation(program, "diffuseTex")};
   auto const mappingModeLoc{abcg::glGetUniformLocation(program, "mappingMode")};
 
