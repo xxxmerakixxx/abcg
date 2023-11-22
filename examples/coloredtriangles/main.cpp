@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
         {.width = 600, .height = 600, .title = "Colored Triangles"});
 
     app.run(window);
-    // test
+    // test 2
   } catch (std::exception const &exception) {
     fmt::print(stderr, "{}\n", exception.what());
     return -1;
