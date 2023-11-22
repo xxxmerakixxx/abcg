@@ -5,12 +5,12 @@ int main(int argc, char **argv) {
     abcg::Application app(argc, argv);
 
     Window window;
-    window.setOpenGLSettings(
-        {.samples = 2, .doubleBuffering = false});
+    window.setOpenGLSettings({.samples = 2, .doubleBuffering = false});
     window.setWindowSettings(
         {.width = 600, .height = 600, .title = "Colored Triangles"});
 
     app.run(window);
+    // test
   } catch (std::exception const &exception) {
     fmt::print(stderr, "{}\n", exception.what());
     return -1;
