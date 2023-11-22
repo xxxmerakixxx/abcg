@@ -17,6 +17,7 @@ uniform vec4 Ka, Kd, Ks;
 uniform float shininess;
 
 // Diffuse texture sampler
+//nota: especifica que tem textura
 uniform sampler2D diffuseTex;
 
 // Mapping mode
@@ -41,7 +42,7 @@ vec4 BlinnPhong(vec3 N, vec3 L, vec3 V, vec2 texCoord) {
     float angle = max(dot(H, N), 0.0);
     specular = pow(angle, shininess);
   }
-
+  //nota: retorna a cor 
   vec4 map_Kd = texture(diffuseTex, texCoord);
   vec4 map_Ka = map_Kd;
 
@@ -83,7 +84,7 @@ vec2 SphericalMapping(vec3 P) {
 
 void main() {
   vec4 color;
-
+  //nota: modo do mapeamento : triplanar, etc
   if (mappingMode == 0) {
     // Triplanar mapping
 
